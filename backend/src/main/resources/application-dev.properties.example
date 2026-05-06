@@ -1,0 +1,13 @@
+server.port=5454
+
+spring.jpa.hibernate.ddl-auto=update
+spring.application.name=Online-Food-Ordering
+
+# MySQL Database Configuration
+spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:3306/onlineFoodOrdering
+spring.datasource.username=root
+spring.datasource.password=your_mysql_password_here
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# Stripe API Key (get from https://dashboard.stripe.com/apikeys)
+stripe.api.key=sk_test_your_stripe_test_key_here
