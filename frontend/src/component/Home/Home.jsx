@@ -44,10 +44,8 @@ export const Home = () => {
     const dropdownRef = useRef(null);
 
     useEffect(() => {
-        if (jwt) {
-            dispatch(getAllRestaurantsAction(jwt))
-        }
-    }, [jwt, dispatch])
+        dispatch(getAllRestaurantsAction(jwt))
+    }, [dispatch])
 
     useEffect(() => {
         const handleClickOutside = (event) => {
