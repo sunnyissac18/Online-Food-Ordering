@@ -71,50 +71,35 @@ public class RestaurantServiceImp implements RestaurantService{
     @Transactional
     public void deleteRestaurant(Long restaurantId) throws Exception {
 
-        // 1. Clear orders_items join table FIRST (references order_item)
+        // 1. Clear foods_ingredients join table by food side
         entityManager.createNativeQuery(
-                        "DELETE FROM orders_items WHERE items_id IN " +
-                                "(SELECT id FROM order_item WHERE food_id IN " +
-                                "(SELECT id FROM food WHERE restaurant_id = :id))")
+                        "DELETE FROM foods_ingredients WHERE foods_id IN " +
+                                "(SELECT id FROM foods WHERE restaurant_id = :id)")
                 .setParameter("id", restaurantId)
                 .executeUpdate();
 
-        // 2. Clear order_items join table
+        // 2. Clear foods_ingredients join table by ingredient side
+        entityManager.createNativeQuery(
+                        "DELETE FROM foods_ingredients WHERE ingredients_id IN " +
+                                "(SELECT id FROM ingredient_items WHERE category_id IN " +
+                                "(SELECT id FROM ingredient_categories WHERE restaurant_id = :id))")
+                .setParameter("id", restaurantId)
+                .executeUpdate();
+
+        // 3. Clear order_items join table (orders -> order_items)
         entityManager.createNativeQuery(
                         "DELETE FROM order_items WHERE order_id IN " +
                                 "(SELECT id FROM orders WHERE restaurant_id = :id)")
                 .setParameter("id", restaurantId)
                 .executeUpdate();
 
-        // 3. Delete order_item rows referencing this restaurant's foods
-        entityManager.createNativeQuery(
-                        "DELETE FROM order_item WHERE food_id IN " +
-                                "(SELECT id FROM food WHERE restaurant_id = :id)")
-                .setParameter("id", restaurantId)
-                .executeUpdate();
-
-        // 4. Clear food_ingredients by food side
-        entityManager.createNativeQuery(
-                        "DELETE FROM food_ingredients WHERE food_id IN " +
-                                "(SELECT id FROM food WHERE restaurant_id = :id)")
-                .setParameter("id", restaurantId)
-                .executeUpdate();
-
-        // 5. Clear food_ingredients by ingredient side (ingredients belonging to this restaurant)
-        entityManager.createNativeQuery(
-                        "DELETE FROM food_ingredients WHERE ingredients_id IN " +
-                                "(SELECT id FROM ingredients_items WHERE category_id IN " +
-                                "(SELECT id FROM ingredient_category WHERE restaurant_id = :id))")
-                .setParameter("id", restaurantId)
-                .executeUpdate();
-
-        // 6. Delete CartItems referencing this restaurant's foods
+        // 4. Delete CartItems referencing this restaurant's foods
         entityManager.createQuery(
                         "DELETE FROM CartItem ci WHERE ci.food.restaurant.id = :id")
                 .setParameter("id", restaurantId)
                 .executeUpdate();
 
-        // 7. JPA cascade handles the rest
+        // 5. JPA cascade handles the rest (orders, foods, categories, ingredients, etc.)
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new Exception("Restaurant not found"));
         restaurantRepository.delete(restaurant);
