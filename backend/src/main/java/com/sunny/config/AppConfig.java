@@ -30,6 +30,17 @@ public class AppConfig {
                 .authorizeHttpRequests(Authorize -> Authorize
                         .requestMatchers("/api/admin/**")
                         .hasAnyRole("RESTAURANT_OWNER", "ADMIN")
+                        // Public read-only endpoints — no login required
+                        .requestMatchers(org.springframework.http.HttpMethod.GET,
+                                "/api/restaurants",
+                                "/api/restaurants/**",
+                                "/api/category/restaurant/**",
+                                "/api/food/restaurant/**",
+                                "/api/food/search"
+                        ).permitAll()
+                        // Auth endpoints are always public
+                        .requestMatchers("/auth/**").permitAll()
+                        // Everything else (cart, orders, profile) requires login
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().permitAll())
                 .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
