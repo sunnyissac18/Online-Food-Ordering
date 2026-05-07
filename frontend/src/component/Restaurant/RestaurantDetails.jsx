@@ -18,7 +18,6 @@ import {
   getRestaurantsCategory,
 } from "../State/Restaurant/Action";
 import { getMenuItemsByRestaurantId } from "../State/Menu/Action";
-import { store } from "../State/store";
 
 const foodTypes = [
   { label: "All", value: "all" },
@@ -30,7 +29,6 @@ const foodTypes = [
 const RestaurantDetails = () => {
   const [foodType, setFoodType] = useState("all");
   const [foodCategory, setFoodCategory] = useState("");
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
   const { auth, restaurant, menu } = useSelector((store) => store);
@@ -39,11 +37,9 @@ const RestaurantDetails = () => {
 
   const handleFilter = (e) => {
     setFoodType(e.target.value);
-    console.log(e.target.value, e.target.name);
   };
   const handleFilterCategory = (e, value) => {
     setSelectedCategory(value);
-    console.log(e.target.value, e.target.name, value);
   };
 
 

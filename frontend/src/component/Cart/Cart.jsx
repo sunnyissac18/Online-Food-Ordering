@@ -105,19 +105,18 @@ const Cart = () => {
     const data = {
       jwt: localStorage.getItem("jwt"),
       order: {
-        restaurantId: cart.cartItems[0].food?.restaurant.id,
+        restaurantId: cart.cartItems[0]?.food?.restaurant?.id,
         deliveryAddress: {
           fullName: auth.user?.fullName,
           streetAddress: values.streetAddress,
           city: values.city,
-          state: values.city,
+          state: values.state,
           postalCode: values.pincode,
           country: "India",
         },
       },
     };
     dispatch(createOrder(data));
-    console.log("Form Values", values);
     handleClose();
   };
 
