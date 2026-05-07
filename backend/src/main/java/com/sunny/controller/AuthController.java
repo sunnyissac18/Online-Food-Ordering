@@ -45,7 +45,9 @@ public class AuthController {
 
         User isEmailExist = userRepository.findByEmail(user.getEmail());
         if (isEmailExist != null) {
-            throw new Exception("Email Already Exists");
+            AuthResponse response = new AuthResponse();
+            response.setMessage("Email is already used with another account");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
         User createdUser = new User();
@@ -84,7 +86,14 @@ public class AuthController {
         String username = req.getEmail();
         String password = req.getPassword();
 
-        Authentication authentication = authenticate(username, password);
+        Authentication authentication;
+        try {
+            authentication = authenticate(username, password);
+        } catch (org.springframework.security.core.AuthenticationException e) {
+            AuthResponse authResponse = new AuthResponse();
+            authResponse.setMessage("Invalid Username or Password");
+            return new ResponseEntity<>(authResponse, HttpStatus.BAD_REQUEST);
+        }
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         String role = authorities.isEmpty() ? null : authorities.iterator().next().getAuthority();
