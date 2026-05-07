@@ -13,6 +13,7 @@ public class RestaurantDto {
     private String title;
 
     @Column(length =1000)
+    @jakarta.persistence.Convert(converter = com.sunny.config.StringListConverter.class)
     private List<String> images;
 
     private String description;
