@@ -27,9 +27,9 @@ export const Navbar = () => {
             <div className='flex items-center space-x-2 lg:space-x-10 text-white'>
 
                 <div>
-                    <IconButton sx={{ color: 'white' }}>
+                    {/* <IconButton sx={{ color: 'white' }}>
                         <SearchIcon sx={{ fontSize: "1.5rem" }} />
-                    </IconButton>
+                    </IconButton> */}
                 </div>
                 <div className=''>
                     {auth.user ? (
