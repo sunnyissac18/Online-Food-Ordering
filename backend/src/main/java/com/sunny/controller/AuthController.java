@@ -43,7 +43,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception {
 
-        User isEmailExist = userRepository.findByEmail(user.getEmail());
+        User isEmailExist = userRepository.findFirstByEmail(user.getEmail());
         if (isEmailExist != null) {
             AuthResponse response = new AuthResponse();
             response.setMessage("Email is already used with another account");
