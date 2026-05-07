@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "ingredient_categories")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
