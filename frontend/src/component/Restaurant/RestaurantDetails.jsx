@@ -46,7 +46,7 @@ const RestaurantDetails = () => {
     console.log(e.target.value, e.target.name, value);
   };
 
-  console.log("restaurant", restaurant);
+
   useEffect(() => {
     dispatch(getRestaurantById({ jwt, restaurantId: id }));
     dispatch(getRestaurantsCategory({ jwt, restaurantId: id }));
@@ -88,7 +88,7 @@ const RestaurantDetails = () => {
             <Grid size={{ xs: 12, lg: 6 }}>
               <img
                 className="w-full h-[40vh] object-cover"
-                src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&q=60"
+                src={restaurant.restaurant?.images?.[2] || restaurant.restaurant?.images?.[1] || "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&q=60"}
                 alt=""
               />
             </Grid>
@@ -104,11 +104,15 @@ const RestaurantDetails = () => {
           <div className="space-y-3 mt-3">
             <p className="text-gray-500 flex items-center gap-3">
               <LocationOnIcon />
-              <span>Ambavadi choke</span>
+              <span>
+                {restaurant.restaurant?.address?.streetAddress
+                  ? `${restaurant.restaurant.address.streetAddress}, ${restaurant.restaurant.address.city || ''}`
+                  : restaurant.restaurant?.address?.city || 'Location not set'}
+              </span>
             </p>
             <p className="text-orange-300 flex items-center gap-3">
               <CalendarTodayIcon />
-              <span>Mon-Sun: 9:00 AM - 9:00 PM (Today)</span>
+              <span>{restaurant.restaurant?.openingHours || 'Hours not available'}</span>
             </p>
           </div>
         </div>
