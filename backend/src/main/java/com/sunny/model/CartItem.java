@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
+@Table(name = "cart_items")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
