@@ -43,7 +43,11 @@ public class AppConfig {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration cfg = new CorsConfiguration();
-                cfg.setAllowedOriginPatterns(Collections.singletonList("*"));
+                cfg.setAllowedOrigins(Arrays.asList(
+                    frontendUrl,
+                    "http://localhost:3000",
+                    "https://cravingskart.netlify.app"
+                ));
                 cfg.setAllowedMethods(Collections.singletonList("*"));
                 cfg.setAllowCredentials(true);
                 cfg.setAllowedHeaders(Collections.singletonList("*"));
