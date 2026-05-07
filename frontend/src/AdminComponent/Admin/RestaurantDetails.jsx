@@ -102,28 +102,28 @@ export const RestaurantDetails = () => {
                   <p className="w-48">Country</p>
                   <p className="text-gray-400">
                     <span className="pr-5">-</span>
-                    Code With Zosh
+                    {restaurant.usersRestaurant?.address?.country || "N/A"}
                   </p>
                 </div>
                 <div className="flex">
                   <p className="w-48">City</p>
                   <p className="text-gray-400">
                     <span className="pr-5">-</span>
-                    Code With Zosh
+                    {restaurant.usersRestaurant?.address?.city || "N/A"}
                   </p>
                 </div>
                 <div className="flex">
                   <p className="w-48">Postal Code</p>
                   <p className="text-gray-400">
                     <span className="pr-5">-</span>
-                    Code With Zosh
+                    {restaurant.usersRestaurant?.address?.postalCode || "N/A"}
                   </p>
                 </div>
                 <div className="flex">
                   <p className="w-48">Street Address</p>
                   <p className="text-gray-400">
                     <span className="pr-5">-</span>
-                    Code With Zosh
+                    {restaurant.usersRestaurant?.address?.streetAddress || "N/A"}
                   </p>
                 </div>
               </div>
