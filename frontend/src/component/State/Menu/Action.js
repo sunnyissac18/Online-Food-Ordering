@@ -46,12 +46,7 @@ export const getMenuItemsByRestaurantId = (reqData) => {
             if (reqData.foodCategory) queryParams.append("food_category", reqData.foodCategory);
 
             const { data } = await api.get(
-                `/api/food/restaurant/${reqData.restaurantId}?${queryParams.toString()}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${reqData.jwt}`,
-                    },
-                }
+                `/api/food/restaurant/${reqData.restaurantId}?${queryParams.toString()}`
             );
 
             dispatch({ type: GET_MENU_ITEMS_BY_RESTAURANT_ID_SUCCESS, payload: data });

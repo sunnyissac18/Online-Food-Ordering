@@ -10,12 +10,7 @@ export const getAllRestaurantsAction = (token) => {
         dispatch({ type: GET_ALL_RESTAURANTS_REQUEST });
 
         try {
-
-            const { data } = await api.get("/api/restaurants", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+            const { data } = await api.get("/api/restaurants");
             console.log("all restaurant ", data);
             dispatch({ type: GET_ALL_RESTAURANTS_SUCCESS, payload: data });
 
@@ -32,11 +27,7 @@ export const getRestaurantById = (reqData) => {
     return async (dispatch) => {
         dispatch({ type: GET_RESTAURANT_BY_ID_REQUEST });
         try {
-            const response = await api.get(`/api/restaurants/${reqData.restaurantId}`, {
-                headers: {
-                    Authorization: `Bearer ${reqData.jwt}`,
-                },
-            });
+            const response = await api.get(`/api/restaurants/${reqData.restaurantId}`);
             dispatch({ type: GET_RESTAURANT_BY_ID_SUCCESS, payload: response.data });
         }
         catch (error) {
@@ -243,17 +234,12 @@ export const getRestaurantsCategory = ({ jwt, restaurantId }) => {
     return async (dispatch) => {
         dispatch({ type: GET_RESTAURANTS_CATEGORY_REQUEST });
         try {
-            const res = await api.get(`/api/category/restaurant/${restaurantId}`, {
-                headers: {
-                    Authorization: `Bearer ${jwt}`,
-                },
-            });
+            const res = await api.get(`/api/category/restaurant/${restaurantId}`);
             console.log("get restaurant category", res.data)
             dispatch({ type: GET_RESTAURANTS_CATEGORY_SUCCESS, payload: res.data });
         }
         catch (error) {
             console.log("catch error", error);
-
             dispatch({ type: GET_RESTAURANTS_CATEGORY_FAILURE, payload: error });
         }
     };
