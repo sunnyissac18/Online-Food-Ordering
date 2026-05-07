@@ -2,6 +2,7 @@ package com.sunny.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sunny.config.StringListConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,9 +43,9 @@ public class Restaurant {
             orphanRemoval = true)
     private List<Order> orders=new ArrayList<>();
 
-    @ElementCollection
-    @Column(length = 1000)
-    private List<String>images;
+    @Convert(converter = StringListConverter.class)
+    @Column(length = 2000)
+    private List<String> images;
 
     private LocalDateTime registrationDate;
 

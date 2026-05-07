@@ -1,6 +1,7 @@
 package com.sunny.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sunny.config.StringListConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,8 @@ public class CartItem {
 
     private int quantity;
 
+    @Convert(converter = StringListConverter.class)
+    @Column(length = 1000)
     private List<String> ingredients;
 
     private Long totalPrice;

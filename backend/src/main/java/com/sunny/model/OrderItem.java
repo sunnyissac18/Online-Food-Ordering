@@ -1,5 +1,6 @@
 package com.sunny.model;
 
+import com.sunny.config.StringListConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +26,8 @@ public class OrderItem {
 
     private Long totalPrice;
 
+    @Convert(converter = StringListConverter.class)
+    @Column(length = 1000)
     private List<String> ingredients;
 
 }

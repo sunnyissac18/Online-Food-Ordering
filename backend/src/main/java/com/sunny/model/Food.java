@@ -1,5 +1,6 @@
 package com.sunny.model;
 
+import com.sunny.config.StringListConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,8 +29,8 @@ public class Food {
     @ManyToOne
     private Category foodCategory;
 
-    @Column(length = 1000)
-    @ElementCollection
+    @Convert(converter = StringListConverter.class)
+    @Column(length = 2000)
     private List<String> images;
 
     private boolean available;
