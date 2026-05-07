@@ -10,6 +10,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -32,6 +35,7 @@ public class RestaurantServiceImp implements RestaurantService{
     private EntityManager entityManager;
 
     @Override
+    @CacheEvict(value = {"restaurants", "restaurantById"}, allEntries = true)
     public Restaurant createRestaurant(CreateRestaurantRequest req, User user) {
 
         Address address=addressRepository.save(req.getAddress());
@@ -106,6 +110,7 @@ public class RestaurantServiceImp implements RestaurantService{
     }
 
     @Override
+    @Cacheable(value = "restaurants")
     public List<Restaurant> getAllRestaurant() {
         return restaurantRepository.findAll();
     }
@@ -116,6 +121,7 @@ public class RestaurantServiceImp implements RestaurantService{
     }
 
     @Override
+    @Cacheable(value = "restaurantById", key = "#id")
     public Restaurant findRestaurantById(Long id) throws Exception {
         Optional<Restaurant> opt=restaurantRepository.findById(id);
 

@@ -17,8 +17,11 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.springframework.cache.annotation.EnableCaching;
+
 @Configuration
 @EnableWebSecurity
+@EnableCaching
 public class AppConfig {
 
     @Value("${frontend.url}")
