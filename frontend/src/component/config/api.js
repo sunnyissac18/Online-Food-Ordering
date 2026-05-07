@@ -21,3 +21,11 @@ api.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+// ── Keep-alive ping ──────────────────────────────────────────
+// Render free tier spins down after 15 mins of inactivity.
+// Ping every 14 mins to keep the server warm while the user has the app open.
+const PING_INTERVAL_MS = 14 * 60 * 1000; // 14 minutes
+setInterval(() => {
+  api.get("/api/restaurants").catch(() => {}); // silent — don't throw
+}, PING_INTERVAL_MS);
